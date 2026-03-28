@@ -1,18 +1,17 @@
-
 name: CI/CD Pipeline
 
 on:
-  push:
-   #workflow_dispatch:
+ # push:
+  # workflow_dispatch:
     branches:
       - main
 
 env:
-  IMAGE_NAME: doc201/flask-app
+  IMAGE_NAME: umeshdocker56/flask-app
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-latest
+    runs-on: linux
 
     steps:
 
@@ -38,6 +37,7 @@ jobs:
       run: |
         mkdir -p ~/.kube
         echo "${{ secrets.KUBECONFIG_DATA }}" | base64 -d > ~/.kube/config
+
     - name: Deploy to Kubernetes
       run: |
         kubectl set image deployment/flask-deployment \
